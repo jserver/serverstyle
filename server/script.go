@@ -36,7 +36,7 @@ func (t *Script) Runner(args *ScriptArgs, results *ScriptResults) error {
 	if err != nil {
 		return errors.New("unable to close script file")
 	}
-	err = file.Chmod(755)
+	err = file.Chmod(0755)
 	if err != nil {
 		return errors.New("unable to chmod script file")
 	}
