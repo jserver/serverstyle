@@ -8,7 +8,7 @@ import (
 	"net"
 	"net/http"
 	"net/rpc"
-	"os"
+	//"os"
 	"strconv"
 )
 
@@ -22,6 +22,7 @@ func main() {
 	address := *host + ":" + strconv.Itoa(*port) 
 	fmt.Println("Address: " + address)
 
+	/*
 	addresses, err := net.InterfaceAddrs()
 	if err != nil {
 		log.Fatal("addresses fail")
@@ -42,7 +43,7 @@ func main() {
 	for _, addr := range addrs {
 		fmt.Println("ADDR:" + addr)
 	}
-
+	*/
 
 	aptGet := new(AptGet)
 	rpc.Register(aptGet)
