@@ -48,6 +48,9 @@ func main() {
 	aptGet := new(AptGet)
 	rpc.Register(aptGet)
 
+	script := new(Script)
+	rpc.Register(script)
+
 	test := new(Test)
 	rpc.Register(test)
 
