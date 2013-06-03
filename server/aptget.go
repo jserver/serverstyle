@@ -23,7 +23,9 @@ func (t *AptGet) Install(args *AptGetArgs, results *AptGetResults) error {
 	command := []string{"apt-get", "-y", "install"}
 	command = append(command, args.Packages...)
 	out, err := exec.Command("sudo", command...).CombinedOutput()
-	results.Err = err.Error()
+	if err != nil {
+		results.Err = err.Error()
+	}
 	results.Output = out
 	return nil
 }

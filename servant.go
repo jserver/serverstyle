@@ -23,6 +23,11 @@ func main() {
 
 	aptGet := new(AptGet)
 	rpc.Register(aptGet)
+
+	test := new(Test)
+	rpc.Register(test)
+
+
 	rpc.HandleHTTP()
 	l, e := net.Listen("tcp", address)
 	if e != nil {
