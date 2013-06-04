@@ -11,7 +11,7 @@ type AptGetArgs struct {
 }
 
 type AptGetResults struct {
-	Err string
+	Err    string
 	Output []byte
 }
 

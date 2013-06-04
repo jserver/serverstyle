@@ -11,7 +11,7 @@ type TestArgs struct {
 }
 
 type TestResults struct {
-	Err string
+	Err    string
 	Output []byte
 }
 

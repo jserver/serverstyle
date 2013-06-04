@@ -8,12 +8,12 @@ import (
 )
 
 type ScriptArgs struct {
-	Name string
+	Name    string
 	Content []byte
 }
 
 type ScriptResults struct {
-	Err string
+	Err    string
 	Output []byte
 }
 
@@ -32,7 +32,9 @@ func (t *Script) Runner(args *ScriptArgs, results *ScriptResults) error {
 		return errors.New("no script to run")
 	}
 
-	file, err := os.Create(args.Name)
+	script := os.Getenv("HOME") + "/style_scripts/" + args.Name
+
+	file, err := os.Create(script)
 	if err != nil {
 		return errors.New("unable to create script file")
 	}
@@ -44,13 +46,12 @@ func (t *Script) Runner(args *ScriptArgs, results *ScriptResults) error {
 	if err != nil {
 		return errors.New("unable to close script file")
 	}
-	err = os.Chmod(args.Name, 0755)
+	err = os.Chmod(script, 0755)
 	if err != nil {
 		return errors.New("unable to chmod script file")
 	}
 
-	command := "./" + args.Name
-	out, err := exec.Command(command).CombinedOutput()
+	out, err := exec.Command(script).CombinedOutput()
 	if err != nil {
 		results.Err = err.Error()
 		fmt.Println("Script Error [ " + results.Err + " ]")
@@ -58,5 +59,6 @@ func (t *Script) Runner(args *ScriptArgs, results *ScriptResults) error {
 		fmt.Println("Successfully ran Script...")
 	}
 	results.Output = out
+	_ = os.Remove(script)
 	return nil
 }

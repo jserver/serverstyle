@@ -8,6 +8,7 @@ import (
 	"net"
 	"net/http"
 	"net/rpc"
+	"os"
 )
 
 var (
@@ -17,8 +18,13 @@ var (
 
 func main() {
 	flag.Parse()
-	address := fmt.Sprintf("%s:%d", *host, *port) 
+	address := fmt.Sprintf("%s:%d", *host, *port)
 	fmt.Println("Address: " + address)
+
+	err := os.Mkdir(os.Getenv("HOME") + "/style_scripts", 0755)
+	if err != nil {
+		fmt.Println("Unable to create script dir")
+	}
 
 	aptGet := new(AptGet)
 	rpc.Register(aptGet)
