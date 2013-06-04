@@ -11,8 +11,16 @@ type AptGetArgs struct {
 }
 
 type AptGetResults struct {
-	Output []byte
 	Err string
+	Output []byte
+}
+
+func (a AptGetResults) GetErr() string {
+	return a.Err
+}
+
+func (a AptGetResults) GetOutput() string {
+	return string(a.Output)
 }
 
 type AptGet int

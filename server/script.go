@@ -13,8 +13,16 @@ type ScriptArgs struct {
 }
 
 type ScriptResults struct {
-	Output []byte
 	Err string
+	Output []byte
+}
+
+func (s ScriptResults) GetErr() string {
+	return s.Err
+}
+
+func (s ScriptResults) GetOutput() string {
+	return string(s.Output)
 }
 
 type Script int
@@ -36,7 +44,7 @@ func (t *Script) Runner(args *ScriptArgs, results *ScriptResults) error {
 	if err != nil {
 		return errors.New("unable to close script file")
 	}
-	err = file.Chmod(0755)
+	err = os.Chmod(args.Name, 0755)
 	if err != nil {
 		return errors.New("unable to chmod script file")
 	}

@@ -22,29 +22,6 @@ func main() {
 	address := *host + ":" + strconv.Itoa(*port) 
 	fmt.Println("Address: " + address)
 
-	/*
-	addresses, err := net.InterfaceAddrs()
-	if err != nil {
-		log.Fatal("addresses fail")
-	}
-	for _, addr := range addresses {
-		fmt.Println("ADDRESS:" + addr.String())
-	}
-
-	hostname, err := os.Hostname()
-	if err != nil {
-		log.Fatal("hostname fail")
-	}
-	fmt.Println("HOST:" + hostname)
-	addrs, err := net.LookupHost(hostname)
-	if err != nil {
-		log.Fatal("lookup fail")
-	}
-	for _, addr := range addrs {
-		fmt.Println("ADDR:" + addr)
-	}
-	*/
-
 	aptGet := new(AptGet)
 	rpc.Register(aptGet)
 

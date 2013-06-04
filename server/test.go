@@ -11,8 +11,16 @@ type TestArgs struct {
 }
 
 type TestResults struct {
-	Output []byte
 	Err string
+	Output []byte
+}
+
+func (t TestResults) GetErr() string {
+	return t.Err
+}
+
+func (t TestResults) GetOutput() string {
+	return string(t.Output)
 }
 
 type Test int
