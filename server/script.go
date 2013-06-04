@@ -9,7 +9,7 @@ import (
 
 type ScriptArgs struct {
 	Name string
-	Content string
+	Content []byte
 }
 
 type ScriptResults struct {
@@ -36,7 +36,7 @@ func (t *Script) Runner(args *ScriptArgs, results *ScriptResults) error {
 	if err != nil {
 		return errors.New("unable to create script file")
 	}
-	_, err = file.WriteString(args.Content)
+	_, err = file.Write(args.Content)
 	if err != nil {
 		return errors.New("unable to write script file")
 	}

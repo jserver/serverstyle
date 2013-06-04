@@ -8,8 +8,6 @@ import (
 	"net"
 	"net/http"
 	"net/rpc"
-	//"os"
-	"strconv"
 )
 
 var (
@@ -19,7 +17,7 @@ var (
 
 func main() {
 	flag.Parse()
-	address := *host + ":" + strconv.Itoa(*port) 
+	address := fmt.Sprintf("%s:%d", *host, *port) 
 	fmt.Println("Address: " + address)
 
 	aptGet := new(AptGet)
