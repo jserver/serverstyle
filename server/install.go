@@ -6,26 +6,26 @@ import (
 	"os/exec"
 )
 
-type AptGetArgs struct {
+type AptGetInstallArgs struct {
 	Packages []string
 }
 
-type AptGetResults struct {
+type AptGetInstallResults struct {
 	Err    string
 	Output []byte
 }
 
-func (a AptGetResults) GetErr() string {
+func (a AptGetInstallResults) GetErr() string {
 	return a.Err
 }
 
-func (a AptGetResults) GetOutput() string {
+func (a AptGetInstallResults) GetOutput() string {
 	return string(a.Output)
 }
 
-type AptGet int
+type AptGetInstall int
 
-func (t *AptGet) Install(args *AptGetArgs, results *AptGetResults) error {
+func (t *AptGetInstall) Install(args *AptGetInstallArgs, results *AptGetInstallResults) error {
 	if len(args.Packages) == 0 {
 		return errors.New("no packages to install")
 	}
@@ -34,9 +34,9 @@ func (t *AptGet) Install(args *AptGetArgs, results *AptGetResults) error {
 	out, err := exec.Command("sudo", command...).CombinedOutput()
 	if err != nil {
 		results.Err = err.Error()
-		fmt.Println("AptGet Error [ " + results.Err + " ]")
+		fmt.Println("AptGet Install Error [ " + results.Err + " ]")
 	} else {
-		fmt.Println("Successfully ran AptGet...")
+		fmt.Println("Successfully ran AptGet Install...")
 	}
 	results.Output = out
 	return nil

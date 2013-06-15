@@ -7,7 +7,7 @@ import (
 )
 
 type TestArgs struct {
-	Packages []string
+	Dirs []string
 }
 
 type TestResults struct {
@@ -26,11 +26,11 @@ func (t TestResults) GetOutput() string {
 type Test int
 
 func (t *Test) Runner(args *TestArgs, results *TestResults) error {
-	if len(args.Packages) == 0 {
-		return errors.New("no packages to install")
+	if len(args.Dirs) == 0 {
+		return errors.New("No directories to display")
 	}
 	command := []string{"-al"}
-	command = append(command, args.Packages...)
+	command = append(command, args.Dirs...)
 	out, err := exec.Command("ls", command...).CombinedOutput()
 	if err != nil {
 		results.Err = err.Error()

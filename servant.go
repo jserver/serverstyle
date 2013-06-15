@@ -26,8 +26,14 @@ func main() {
 		fmt.Println("Unable to create script dir")
 	}
 
-	aptGet := new(AptGet)
-	rpc.Register(aptGet)
+	install := new(AptGetInstall)
+	rpc.Register(install)
+
+	update := new(AptGetUpdate)
+	rpc.Register(update)
+
+	upgrade := new(AptGetUpgrade)
+	rpc.Register(upgrade)
 
 	script := new(Script)
 	rpc.Register(script)
