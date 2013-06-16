@@ -13,7 +13,7 @@ type Results interface {
 	GetOutput() string
 }
 
-var	logger *log.Logger
+var logger *log.Logger
 
 func StartServer(address string) {
 
@@ -25,13 +25,16 @@ func StartServer(address string) {
 
 	logger = log.New(logfile, "", log.LstdFlags)
 
-	install := new(AptGetInstall)
-	rpc.Register(install)
+	aptInstall := new(AptInstall)
+	rpc.Register(aptInstall)
 
-	update := new(AptGetUpdate)
+	easyInstall := new(EasyInstall)
+	rpc.Register(easyInstall)
+
+	update := new(AptUpdate)
 	rpc.Register(update)
 
-	upgrade := new(AptGetUpgrade)
+	upgrade := new(AptUpgrade)
 	rpc.Register(upgrade)
 
 	script := new(Script)

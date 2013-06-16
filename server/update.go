@@ -4,24 +4,24 @@ import (
 	"os/exec"
 )
 
-type AptGetUpdateArgs struct {}
+type AptUpdateArgs struct{}
 
-type AptGetUpdateResults struct {
+type AptUpdateResults struct {
 	Err    string
 	Output []byte
 }
 
-func (a AptGetUpdateResults) GetErr() string {
+func (a AptUpdateResults) GetErr() string {
 	return a.Err
 }
 
-func (a AptGetUpdateResults) GetOutput() string {
+func (a AptUpdateResults) GetOutput() string {
 	return string(a.Output)
 }
 
-type AptGetUpdate struct {}
+type AptUpdate struct{}
 
-func (t *AptGetUpdate) Update(args *AptGetUpdateArgs, results *AptGetUpdateResults) error {
+func (t *AptUpdate) Update(args *AptUpdateArgs, results *AptUpdateResults) error {
 	command := []string{"apt-get", "-y", "update"}
 	out, err := exec.Command("sudo", command...).CombinedOutput()
 	if err != nil {

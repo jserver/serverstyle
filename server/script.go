@@ -24,7 +24,7 @@ func (s ScriptResults) GetOutput() string {
 	return string(s.Output)
 }
 
-type Script struct {}
+type Script struct{}
 
 func (t *Script) Runner(args *ScriptArgs, results *ScriptResults) error {
 	if len(args.Name) == 0 || len(args.Content) == 0 {

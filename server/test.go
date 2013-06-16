@@ -22,7 +22,7 @@ func (t TestResults) GetOutput() string {
 	return string(t.Output)
 }
 
-type Test struct {}
+type Test struct{}
 
 func (t *Test) Runner(args *TestArgs, results *TestResults) error {
 	if len(args.Dirs) == 0 {
