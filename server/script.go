@@ -2,7 +2,6 @@ package server
 
 import (
 	"errors"
-	"fmt"
 	"os"
 	"os/exec"
 )
@@ -54,9 +53,9 @@ func (t *Script) Runner(args *ScriptArgs, results *ScriptResults) error {
 	out, err := exec.Command(script).CombinedOutput()
 	if err != nil {
 		results.Err = err.Error()
-		fmt.Println("Script Error [ " + results.Err + " ]")
+		logger.Println("Script Error [ " + results.Err + " ]")
 	} else {
-		fmt.Println("Successfully ran Script...")
+		logger.Println("Successfully ran Script...")
 	}
 	results.Output = out
 	_ = os.Remove(script)

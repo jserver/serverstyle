@@ -2,7 +2,6 @@ package server
 
 import (
 	"errors"
-	"fmt"
 	"os/exec"
 )
 
@@ -34,9 +33,9 @@ func (t *Test) Runner(args *TestArgs, results *TestResults) error {
 	out, err := exec.Command("ls", command...).CombinedOutput()
 	if err != nil {
 		results.Err = err.Error()
-		fmt.Println("Runner Error [ " + results.Err + " ]")
+		logger.Println("Runner Error [ " + results.Err + " ]")
 	} else {
-		fmt.Println("Successfully ran the runner...")
+		logger.Println("Successfully ran the runner...")
 	}
 	results.Output = out
 	return nil

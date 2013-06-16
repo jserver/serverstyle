@@ -1,7 +1,6 @@
 package server
 
 import (
-	"fmt"
 	"os/exec"
 )
 
@@ -27,9 +26,9 @@ func (t *AptGetUpgrade) Upgrade(args *AptGetUpgradeArgs, results *AptGetUpgradeR
 	out, err := exec.Command("sudo", command...).CombinedOutput()
 	if err != nil {
 		results.Err = err.Error()
-		fmt.Println("AptGet Upgrade Error [ " + results.Err + " ]")
+		logger.Println("AptGet Upgrade Error [ " + results.Err + " ]")
 	} else {
-		fmt.Println("Successfully ran AptGet Upgrade...")
+		logger.Println("Successfully ran AptGet Upgrade...")
 	}
 	results.Output = out
 	return nil

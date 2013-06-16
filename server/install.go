@@ -2,7 +2,6 @@ package server
 
 import (
 	"errors"
-	"fmt"
 	"os/exec"
 )
 
@@ -34,9 +33,9 @@ func (t *AptGetInstall) Install(args *AptGetInstallArgs, results *AptGetInstallR
 	out, err := exec.Command("sudo", command...).CombinedOutput()
 	if err != nil {
 		results.Err = err.Error()
-		fmt.Println("AptGet Install Error [ " + results.Err + " ]")
+		logger.Println("AptGet Install Error [ " + results.Err + " ]")
 	} else {
-		fmt.Println("Successfully ran AptGet Install...")
+		logger.Println("Successfully ran AptGet Install...")
 	}
 	results.Output = out
 	return nil
