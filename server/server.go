@@ -16,16 +16,14 @@ type Results interface {
 var	logger *log.Logger
 
 func StartServer(address string) {
-	logfile, err := os.OpenFile("/var/log/serverstyle.log", os.O_APPEND, 0644)
-	if err != nil {
-		log.Fatal("Unable to open log file", err)
-	}
-	logger = log.New(logfile, "", log.LstdFlags)
 
-	err = os.Mkdir(os.Getenv("HOME") + "/style_scripts", 0755)
+	logfile, err := os.OpenFile("/var/log/serverstyle.log", os.O_WRONLY|os.O_APPEND, 0644)
 	if err != nil {
-		logger.Println("Unable to create script dir")
+		panic(err)
 	}
+	defer logfile.Close()
+
+	logger = log.New(logfile, "", log.LstdFlags)
 
 	install := new(AptGetInstall)
 	rpc.Register(install)

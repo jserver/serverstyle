@@ -24,14 +24,14 @@ func (s ScriptResults) GetOutput() string {
 	return string(s.Output)
 }
 
-type Script int
+type Script struct {}
 
 func (t *Script) Runner(args *ScriptArgs, results *ScriptResults) error {
 	if len(args.Name) == 0 || len(args.Content) == 0 {
 		return errors.New("no script to run")
 	}
 
-	script := os.Getenv("HOME") + "/style_scripts/" + args.Name
+	script := "/var/lib/serverstyle/scripts/" + args.Name
 
 	file, err := os.Create(script)
 	if err != nil {

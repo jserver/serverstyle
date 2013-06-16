@@ -19,7 +19,7 @@ func (a AptGetUpgradeResults) GetOutput() string {
 	return string(a.Output)
 }
 
-type AptGetUpgrade int
+type AptGetUpgrade struct {}
 
 func (t *AptGetUpgrade) Upgrade(args *AptGetUpgradeArgs, results *AptGetUpgradeResults) error {
 	command := []string{"apt-get", "-y", "upgrade"}

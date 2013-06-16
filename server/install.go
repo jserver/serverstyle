@@ -22,7 +22,7 @@ func (a AptGetInstallResults) GetOutput() string {
 	return string(a.Output)
 }
 
-type AptGetInstall int
+type AptGetInstall struct {}
 
 func (t *AptGetInstall) Install(args *AptGetInstallArgs, results *AptGetInstallResults) error {
 	if len(args.Packages) == 0 {
