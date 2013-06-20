@@ -1,6 +1,7 @@
 package server
 
 import (
+	"bytes"
 	"errors"
 	"os"
 	"os/exec"
@@ -14,6 +15,7 @@ type ScriptArgs struct {
 type ScriptResults struct {
 	Err    string
 	Output []byte
+	Errors []byte
 }
 
 func (s ScriptResults) GetErr() string {
@@ -22,6 +24,10 @@ func (s ScriptResults) GetErr() string {
 
 func (s ScriptResults) GetOutput() string {
 	return string(s.Output)
+}
+
+func (s ScriptResults) GetErrors() string {
+	return string(s.Errors)
 }
 
 type Script struct{}
@@ -50,14 +56,20 @@ func (t *Script) Runner(args *ScriptArgs, results *ScriptResults) error {
 		return errors.New("unable to chmod script file")
 	}
 
-	out, err := exec.Command(script).CombinedOutput()
+	cmd := exec.Command(script)
+	var stdout, stderr bytes.Buffer
+	cmd.Stdout = &stdout
+	cmd.Stderr = &stderr
+
+	err = cmd.Run()
 	if err != nil {
 		results.Err = err.Error()
 		logger.Println("Script Error [ " + results.Err + " ]")
 	} else {
 		logger.Println("Successfully ran Script...")
 	}
-	results.Output = out
+	results.Output = stdout.Bytes()
+	results.Errors = stderr.Bytes()
 	_ = os.Remove(script)
 	return nil
 }

@@ -1,6 +1,7 @@
 package server
 
 import (
+	"bytes"
 	"errors"
 	"os/exec"
 )
@@ -12,6 +13,7 @@ type AptInstallArgs struct {
 type AptInstallResults struct {
 	Err    string
 	Output []byte
+	Errors []byte
 }
 
 func (a AptInstallResults) GetErr() string {
@@ -22,6 +24,10 @@ func (a AptInstallResults) GetOutput() string {
 	return string(a.Output)
 }
 
+func (a AptInstallResults) GetErrors() string {
+	return string(a.Errors)
+}
+
 type AptInstall struct{}
 
 func (t *AptInstall) Install(args *AptInstallArgs, results *AptInstallResults) error {
@@ -30,14 +36,19 @@ func (t *AptInstall) Install(args *AptInstallArgs, results *AptInstallResults) e
 	}
 	command := []string{"apt-get", "-y", "install"}
 	command = append(command, args.Packages...)
-	out, err := exec.Command("sudo", command...).CombinedOutput()
+	cmd := exec.Command("sudo", command...)
+	var stdout, stderr bytes.Buffer
+	cmd.Stdout = &stdout
+	cmd.Stderr = &stderr
+
+	err := cmd.Run()
 	if err != nil {
 		results.Err = err.Error()
 		logger.Println("AptGet Install Error [ " + results.Err + " ]")
 	} else {
 		logger.Println("Successfully ran AptGet Install...")
 	}
-	results.Output = out
+	results.Output = stdout.Bytes()
+	results.Errors = stderr.Bytes()
 	return nil
 }
-

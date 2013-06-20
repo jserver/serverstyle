@@ -1,6 +1,7 @@
 package server
 
 import (
+	"bytes"
 	"errors"
 	"os/exec"
 )
@@ -12,6 +13,7 @@ type EasyInstallArgs struct {
 type EasyInstallResults struct {
 	Err    string
 	Output []byte
+	Errors []byte
 }
 
 func (e EasyInstallResults) GetErr() string {
@@ -22,6 +24,10 @@ func (e EasyInstallResults) GetOutput() string {
 	return string(e.Output)
 }
 
+func (e EasyInstallResults) GetErrors() string {
+	return string(e.Errors)
+}
+
 type EasyInstall struct{}
 
 func (t *EasyInstall) Install(args *EasyInstallArgs, results *EasyInstallResults) error {
@@ -30,13 +36,19 @@ func (t *EasyInstall) Install(args *EasyInstallArgs, results *EasyInstallResults
 	}
 	command := []string{"easy_install"}
 	command = append(command, args.Packages...)
-	out, err := exec.Command("sudo", command...).CombinedOutput()
+	cmd := exec.Command("sudo", command...)
+	var stdout, stderr bytes.Buffer
+	cmd.Stdout = &stdout
+	cmd.Stderr = &stderr
+
+	err := cmd.Run()
 	if err != nil {
 		results.Err = err.Error()
 		logger.Println("Easy Install Error [ " + results.Err + " ]")
 	} else {
 		logger.Println("Successfully ran Easy Install...")
 	}
-	results.Output = out
+	results.Output = stdout.Bytes()
+	results.Errors = stderr.Bytes()
 	return nil
 }

@@ -11,6 +11,7 @@ import (
 type Results interface {
 	GetErr() string
 	GetOutput() string
+	GetErrors() string
 }
 
 var logger *log.Logger
