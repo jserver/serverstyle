@@ -28,8 +28,7 @@ func (a AptUpgradeResults) GetErrors() string {
 type AptUpgrade struct{}
 
 func (t *AptUpgrade) Upgrade(args *AptUpgradeArgs, results *AptUpgradeResults) error {
-	command := []string{"apt-get", "-qq", "-y", "upgrade"}
-	cmd := exec.Command("sudo", command...)
+	cmd := exec.Command("env", "DEBIAN_FRONTEND=noninteractive", "apt-get", "-y", "-o", "DPkg::Options::=--force-confnew", "upgrade")
 	var stdout, stderr bytes.Buffer
 	cmd.Stdout = &stdout
 	cmd.Stderr = &stderr
@@ -38,9 +37,9 @@ func (t *AptUpgrade) Upgrade(args *AptUpgradeArgs, results *AptUpgradeResults) e
 	if err != nil {
 		results.Err = err.Error()
 		logger.Println("AptGet Upgrade Error [ " + results.Err + " ]")
-	} else {
-		logger.Println("Successfully ran AptGet Upgrade...")
+		return err
 	}
+	logger.Println("Successfully ran AptGet Upgrade...")
 	results.Output = stdout.Bytes()
 	results.Errors = stderr.Bytes()
 	return nil

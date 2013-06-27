@@ -28,8 +28,7 @@ func (a AptUpdateResults) GetErrors() string {
 type AptUpdate struct{}
 
 func (t *AptUpdate) Update(args *AptUpdateArgs, results *AptUpdateResults) error {
-	command := []string{"apt-get", "-qq", "-y", "update"}
-	cmd := exec.Command("sudo", command...)
+	cmd := exec.Command("apt-get", "-qq", "-y", "update")
 	var stdout, stderr bytes.Buffer
 	cmd.Stdout = &stdout
 	cmd.Stderr = &stderr

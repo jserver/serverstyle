@@ -34,9 +34,9 @@ func (t *EasyInstall) Install(args *EasyInstallArgs, results *EasyInstallResults
 	if len(args.Packages) == 0 {
 		return errors.New("no packages to install")
 	}
-	command := []string{"easy_install"}
+	command := []string{"install"}
 	command = append(command, args.Packages...)
-	cmd := exec.Command("sudo", command...)
+	cmd := exec.Command("pip", command...)
 	var stdout, stderr bytes.Buffer
 	cmd.Stdout = &stdout
 	cmd.Stderr = &stderr

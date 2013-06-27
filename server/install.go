@@ -34,9 +34,9 @@ func (t *AptInstall) Install(args *AptInstallArgs, results *AptInstallResults) e
 	if len(args.Packages) == 0 {
 		return errors.New("no packages to install")
 	}
-	command := []string{"apt-get", "-y", "install"}
+	command := []string{"DEBIAN_FRONTEND=noninteractive", "apt-get", "-y", "install"}
 	command = append(command, args.Packages...)
-	cmd := exec.Command("sudo", command...)
+	cmd := exec.Command("env", command...)
 	var stdout, stderr bytes.Buffer
 	cmd.Stdout = &stdout
 	cmd.Stderr = &stderr
