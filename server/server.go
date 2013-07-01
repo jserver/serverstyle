@@ -29,6 +29,9 @@ func StartServer(address string) {
 	aptInstall := new(AptInstall)
 	rpc.Register(aptInstall)
 
+	ppaInstall := new(PPAInstall)
+	rpc.Register(ppaInstall)
+
 	easyInstall := new(EasyInstall)
 	rpc.Register(easyInstall)
 
