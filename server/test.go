@@ -7,6 +7,7 @@ import (
 )
 
 type TestArgs struct {
+	Auth
 	Dirs []string
 }
 
@@ -31,8 +32,16 @@ func (t TestResults) GetErrors() string {
 type Test struct{}
 
 func (t *Test) Runner(args *TestArgs, results *TestResults) error {
+	if args.Username != "user" || args.Password != "pass123" {
+		err := errors.New("Auth Failed")
+		logger.Println(err.Error())
+		return err
+	}
+
 	if len(args.Dirs) == 0 {
-		return errors.New("No directories to display")
+		err := errors.New("No directories to display")
+		logger.Println(err.Error())
+		return err
 	}
 	command := []string{"-al"}
 	command = append(command, args.Dirs...)

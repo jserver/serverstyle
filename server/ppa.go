@@ -30,7 +30,7 @@ func (a PPAInstallResults) GetErrors() string {
 type PPAInstall struct{}
 
 func (t *PPAInstall) AddRepo(args *PPAInstallArgs, results *PPAInstallResults) error {
-	cmd := exec.Command("add-apt-repository", "-y", "ppa:" + args.Name)
+	cmd := exec.Command("add-apt-repository", "-y", "ppa:"+args.Name)
 	var stdout, stderr bytes.Buffer
 	cmd.Stdout = &stdout
 	cmd.Stderr = &stderr

@@ -8,6 +8,11 @@ import (
 	"os"
 )
 
+type Auth struct {
+	Username string
+	Password string
+}
+
 type Results interface {
 	GetErr() string
 	GetOutput() string
